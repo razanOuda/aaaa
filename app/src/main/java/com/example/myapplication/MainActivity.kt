@@ -45,6 +45,23 @@ class MainActivity : AppCompatActivity() {
             .update(topic)
             .addOnSuccessListener {
                 log.d("update success", "تم تحديث الموضوع بنجاح")
+                uploadImageToFirebase(newImageLogo)
+            }
+            .addOnFailureListener { e ->
+                log.w("update error", "حدث خطأ أثناء تحديث الموضوع", e)
+            }
+    }
+
+    private fun uploadImageToFirebase(imageLogo: String) {
+        val topic = hashMapOf(
+            "logo" to newImageLogo
+        )
+
+        db.collection("topics")
+            .document(topicId)
+            .update(topic)
+            .addOnSuccessListener {
+                log.d("update success", "تم تحديث الموضوع بنجاح")
             }
             .addOnFailureListener { e ->
                 log.w("update error", "حدث خطأ أثناء تحديث الموضوع", e)
@@ -62,6 +79,7 @@ class MainActivity : AppCompatActivity() {
                 log.w("delete error", "حدث خطأ أثناء حذف الموضوع", e)
             }
     }
+
 }
 
 
